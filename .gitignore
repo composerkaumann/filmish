@@ -1,0 +1,5 @@
+.DS_Store
+FilmishApp/.build/
+FilmishApp/.swiftpm/
+FilmishApp/dist/
+/sources/
