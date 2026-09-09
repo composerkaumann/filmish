@@ -28,6 +28,7 @@ final class AppModel: ObservableObject {
     @Published var inputFolder: URL?
     @Published var outputURL: URL?
     @Published var images: [ImageInfo] = []
+    @Published var selectedImageID: UUID?
     @Published var transitions: [String] = ["none"]
     @Published var sameFadesEnabled = true
     @Published var durationSeconds = 10.0
@@ -46,6 +47,7 @@ final class AppModel: ObservableObject {
     @Published private(set) var ffprobeAvailable = false
 
     private var renderProcess: Process?
+    private var hasPresentedInitialFolderChooser = false
 
     init() {
         refreshDependencies()
@@ -246,6 +248,15 @@ final class AppModel: ObservableObject {
         }
     }
 
+    func chooseInputFolderOnLaunchIfNeeded() {
+        guard !hasPresentedInitialFolderChooser, inputFolder == nil else { return }
+        hasPresentedInitialFolderChooser = true
+        DispatchQueue.main.async { [weak self] in
+            guard let self, self.inputFolder == nil else { return }
+            self.chooseInputFolder()
+        }
+    }
+
     func chooseOutputFile() {
         let panel = NSSavePanel()
         panel.title = "Choose Output MP4"
@@ -326,6 +337,7 @@ final class AppModel: ObservableObject {
     func removeImage(_ imageID: UUID) {
         guard !isRendering else { return }
         images.removeAll { $0.id == imageID }
+        if selectedImageID == imageID { selectedImageID = nil }
     }
 
     func render() {

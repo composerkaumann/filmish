@@ -45,6 +45,7 @@ struct ContentView: View {
             if focusedField == nil {
                 focusedField = .totalDuration
             }
+            model.chooseInputFolderOnLaunchIfNeeded()
         }
     }
 
@@ -194,7 +195,7 @@ struct ContentView: View {
                     .padding(.horizontal, 8)
                     .padding(.bottom, 6)
                     Divider()
-                    List(Array(model.images.enumerated()), id: \.element.id) { index, image in
+                    List(Array(model.images.enumerated()), id: \.element.id, selection: $model.selectedImageID) { index, image in
                         HStack {
                             Text("\(index + 1)")
                                 .monospacedDigit()
@@ -276,6 +277,7 @@ struct ContentView: View {
                                 draggedImageID: $draggedImageID
                             )
                         )
+                        .tag(image.id)
                     }
                     .listStyle(.plain)
                 }
@@ -325,8 +327,6 @@ struct ContentView: View {
                     onTab: advanceFocus
                 )
                     .frame(width: 72)
-                Stepper("seconds", value: $model.durationSeconds, in: 0.1...86_400, step: 0.1)
-                    .labelsHidden()
                 Text("seconds")
                     .foregroundStyle(.secondary)
 

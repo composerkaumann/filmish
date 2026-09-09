@@ -122,11 +122,13 @@ final class ImageProbeTests: XCTestCase {
                 image(named: "also-correct.png", in: folder),
             ]
             let removedID = model.images[1].id
+            model.selectedImageID = removedID
 
             model.removeImage(removedID)
 
             XCTAssertEqual(model.images.map(\.name), ["correct.png", "also-correct.png"])
             XCTAssertFalse(model.images.contains { $0.id == removedID })
+            XCTAssertNil(model.selectedImageID)
         }
     }
 

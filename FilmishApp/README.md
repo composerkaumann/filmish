@@ -3,7 +3,7 @@
 A personal native macOS SwiftUI front end for the frame-accurate
 `filmish.sh` FFmpeg workflow. Technically a movie, probably.
 
-Version 1.2 sorts images alphabetically, checks every image dimension, supports
+Version 1.2.1 sorts images alphabetically, checks every image dimension, supports
 24/25/30 fps, and gives every image boundary its own FFmpeg transition type and
 decimal-second duration. All times are rounded internally to the nearest video
 frame. **Use the same fade between all images** links the row controls so one
@@ -25,6 +25,9 @@ image from the current slideshow without deleting the original file.
 
 Keyboard Tab and Shift-Tab move through the editable time fields in their
 visible order, including transition and clear-display times in every image row.
+The image-folder chooser opens automatically when the app launches. Every
+window action is also available from the native macOS menu bar, including
+removing the selected image from the slideshow.
 
 ## Versioning
 
@@ -33,7 +36,8 @@ component: `1.2.1`, `1.2.2`, and so on. Test builds and intermediate compiles do
 not change the version. When a new base version is explicitly declared, such as
 `1.3`, that release uses `1.3` and subsequent packaged builds continue with
 `1.3.1`, `1.3.2`, and so on. `CFBundleVersion` also increments for every
-user-facing packaged build.
+user-facing packaged build. The current release is `1.2.1`; the next packaged
+build will be `1.2.2` unless a new base version is declared first.
 
 ## Build the app
 

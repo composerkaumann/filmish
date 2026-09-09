@@ -19,7 +19,38 @@ struct FilmishApplication: App {
                     showAboutPanel()
                 }
             }
-            CommandGroup(replacing: .newItem) { }
+            CommandGroup(replacing: .newItem) {
+                Button("Choose Image Folder…") { model.chooseInputFolder() }
+                    .keyboardShortcut("o", modifiers: [.command])
+                Button("Choose Output…") { model.chooseOutputFile() }
+                    .keyboardShortcut("s", modifiers: [.command, .shift])
+            }
+            CommandMenu("Images") {
+                Button("Rescan") { model.scanAgain() }
+                    .keyboardShortcut("r", modifiers: [.command])
+                    .disabled(model.inputFolder == nil || model.isScanning || model.isRendering)
+                Button("Reset to Alphabetical") { model.resetToAlphabeticalOrder() }
+                    .disabled(model.images.count < 2 || model.isAlphabeticalOrder || model.isRendering)
+                Button("Remove Selected Image") {
+                    if let imageID = model.selectedImageID {
+                        model.removeImage(imageID)
+                    }
+                }
+                .disabled(model.selectedImageID == nil || model.isRendering)
+            }
+            CommandMenu("Render") {
+                Button("Create MP4") { model.render() }
+                    .keyboardShortcut(.return, modifiers: [.command])
+                    .disabled(!model.canRender)
+                Button("Cancel") { model.cancelRendering() }
+                    .disabled(!model.isRendering)
+                Divider()
+                Button("Show in Finder") { model.revealOutput() }
+                    .disabled(model.finishedOutput == nil)
+            }
+            CommandMenu("Tools") {
+                Button("Check Again") { model.refreshDependencies() }
+            }
         }
     }
 
@@ -45,8 +76,8 @@ struct FilmishApplication: App {
         NSApplication.shared.orderFrontStandardAboutPanel(options: [
             .applicationName: "Filmish",
             .applicationIcon: icon,
-            .applicationVersion: "1.2",
-            .version: "3",
+            .applicationVersion: "1.2.1",
+            .version: "4",
             .credits: credits,
         ])
         NSApplication.shared.activate(ignoringOtherApps: true)
