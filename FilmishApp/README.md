@@ -3,7 +3,7 @@
 A personal native macOS SwiftUI front end for the frame-accurate
 `filmish.sh` FFmpeg workflow. Technically a movie, probably.
 
-Version 1.2.1 sorts images alphabetically, checks every image dimension, supports
+Version 1.2.2 sorts images alphabetically, checks every image dimension, supports
 24/25/30 fps, and gives every image boundary its own FFmpeg transition type and
 decimal-second duration. All times are rounded internally to the nearest video
 frame. **Use the same fade between all images** links the row controls so one
@@ -36,8 +36,17 @@ component: `1.2.1`, `1.2.2`, and so on. Test builds and intermediate compiles do
 not change the version. When a new base version is explicitly declared, such as
 `1.3`, that release uses `1.3` and subsequent packaged builds continue with
 `1.3.1`, `1.3.2`, and so on. `CFBundleVersion` also increments for every
-user-facing packaged build. The current release is `1.2.1`; the next packaged
-build will be `1.2.2` unless a new base version is declared first.
+user-facing packaged build. The current release is `1.2.2`; the next packaged
+build will be `1.2.3` unless a new base version is declared first.
+
+## Open in Xcode
+
+Open `Filmish.xcodeproj`, select the shared **Filmish** scheme and **My Mac**, then
+use **Product > Run** or **Product > Test**. The project contains a native macOS
+Application target, a Unit Test target, the app icon asset catalog, `Info.plist`,
+and the bundled `filmish.sh` worker. `Package.swift` remains available for quick
+Swift Package command-line tests, but the Xcode project is the canonical app
+build definition.
 
 ## Build the app
 
@@ -46,8 +55,8 @@ build will be `1.2.2` unless a new base version is declared first.
 ```
 
 The signed development build is created at `dist/Filmish.app`.
-The packaging script generates the complete macOS `AppIcon.icns` from
-`Assets/AppIcon.png` and embeds it in the app bundle.
+The packaging script builds the shared Xcode scheme, copies its Release product
+to `dist/Filmish.app`, and applies an ad-hoc signature for local distribution.
 
 The app expects Homebrew FFmpeg at `/opt/homebrew/bin/ffmpeg` and
 `/opt/homebrew/bin/ffprobe`, with `/usr/local/bin` as a fallback.

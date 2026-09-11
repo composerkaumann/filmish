@@ -76,8 +76,8 @@ struct FilmishApplication: App {
         NSApplication.shared.orderFrontStandardAboutPanel(options: [
             .applicationName: "Filmish",
             .applicationIcon: icon,
-            .applicationVersion: "1.2.1",
-            .version: "4",
+            .applicationVersion: "1.2.2",
+            .version: "5",
             .credits: credits,
         ])
         NSApplication.shared.activate(ignoringOtherApps: true)
