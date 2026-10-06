@@ -4,3 +4,5 @@ FilmishApp/.swiftpm/
 FilmishApp/dist/
 /sources/
 /AGENTS.md
+xcuserdata/
+*.xcuserstate
